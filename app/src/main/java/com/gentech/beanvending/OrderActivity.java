@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,8 @@ public class OrderActivity extends AppCompatActivity {
     String beanNum2Value = "";
     String beanType2Name = "";
 
+    Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +68,10 @@ public class OrderActivity extends AppCompatActivity {
 
         btOrder.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                monitor();
-                updateUi();
             }
         });
+
+        handler.post(runnableCode);
     }
 
 
@@ -128,6 +131,15 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
     }
+
+    private Runnable runnableCode = new Runnable() {
+        @Override
+        public void run() {
+            monitor();
+            updateUi();
+            handler.postDelayed(this, 1000);
+        }
+    };
 
 
 }
