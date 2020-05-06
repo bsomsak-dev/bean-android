@@ -3,7 +3,6 @@ package com.gentech.beanvending;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -38,6 +38,7 @@ public class OrderActivity extends AppCompatActivity {
     private TextView tvUsername;
 
     private TextView tvBeanType1Num, tvBeanType2Num;
+    private EditText edBeanNum;
 
     private RequestQueue mRequestQueue;
     private Button btOrder;
@@ -47,11 +48,12 @@ public class OrderActivity extends AppCompatActivity {
     String beanType1Value = "";
     String beanNum1Value = "";
     String beanType1Name = "";
+
     String beanType2Value = "";
     String beanNum2Value = "";
     String beanType2Name = "";
 
-    private int selectType = 1;
+    private String selectBeanType = "1";
 
 
 
@@ -75,16 +77,43 @@ public class OrderActivity extends AppCompatActivity {
         tvBeanType1Num = (TextView) findViewById(R.id.tvBeanType1Num);
         tvBeanType2Num = (TextView) findViewById(R.id.tvBeanType2Num);
 
+
         btOrder = (Button) findViewById(R.id.btOrder);
         rdSelectType1 = (RadioButton) findViewById(R.id.rdSelectType1);
         rdSelectType2 = (RadioButton) findViewById(R.id.rdSelectType2);
 
         rdSelectType = (RadioGroup) findViewById(R.id.rdSelectType);
 
+        edBeanNum = (EditText) findViewById(R.id.edBeanNum);
+
 
         btOrder.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                Log.i(tag, "selectType = "+selectType);
+                Log.i(tag, "selectType = "+ selectBeanType);
+                String selectBeanNum = edBeanNum.getText().toString();
+
+                boolean orderValid = true;
+                if(selectBeanNum.isEmpty()){
+                    Toast.makeText(OrderActivity.this, "Please Enter Bean number!!", Toast.LENGTH_LONG).show();
+                }else{
+                    if(selectBeanType.equals("1")){
+                        if(Integer.parseInt(selectBeanNum) > Integer.parseInt(beanNum1Value)){
+                            Toast.makeText(OrderActivity.this, "Not enough beans for your choice!!", Toast.LENGTH_LONG).show();
+                            orderValid = false;
+                        }
+                    }else{
+                        if(Integer.parseInt(selectBeanNum) > Integer.parseInt(beanNum2Value)){
+                            Toast.makeText(OrderActivity.this, "Not enough beans for your choice!!", Toast.LENGTH_LONG).show();
+                            orderValid = false;
+
+                        }
+                    }
+                }
+                if(orderValid){
+                    makeOrder(username, selectBeanType, selectBeanNum);
+                    Toast.makeText(OrderActivity.this, "Order Has Been Send!",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -94,13 +123,13 @@ public class OrderActivity extends AppCompatActivity {
                 switch(checkedId){
                     case R.id.rdSelectType1:
                         // do operations specific to this selection
-                        selectType = 1;
+                        selectBeanType = "1";
                         break;
                     case R.id.rdSelectType2:
-                        selectType = 2;
+                        selectBeanType = "2";
                         break;
                     default:
-                        selectType = -1;
+                        selectBeanType = "";
                         break;
                 }
             }
