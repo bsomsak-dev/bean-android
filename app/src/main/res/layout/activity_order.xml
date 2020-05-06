@@ -44,37 +44,18 @@
         app:layout_constraintStart_toEndOf="@+id/tvBeanType1Num"
         app:layout_constraintTop_toTopOf="@+id/tvBeanType1Num" />
 
-    <Button
-        android:id="@+id/btSelectType1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="148dp"
-        android:text="Select Type 1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvBeanType1Num" />
-
-    <Button
-        android:id="@+id/btSelectType2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="56dp"
-        android:text="Select Type 2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvBeanType2Num" />
-
     <EditText
         android:id="@+id/edBeanNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Enter number"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btSelectType1" />
+        app:layout_constraintTop_toBottomOf="@+id/rdSelectType" />
 
     <Button
         android:id="@+id/btOrder"
@@ -102,4 +83,36 @@
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+    <RadioGroup
+        android:id="@+id/rdSelectType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBeanType1Num">
+
+        <RadioButton
+            android:id="@+id/rdSelectType1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Select Type 1"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/rdSelectType2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="20dp"
+            android:text="Select Type 2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvBeanType1Num" />
+
+    </RadioGroup>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

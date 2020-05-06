@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private RequestQueue mRequestQueue;
     private Button btOrder;
+    private RadioGroup rdSelectType;
+    private RadioButton rdSelectType1, rdSelectType2;
 
     String beanType1Value = "";
     String beanNum1Value = "";
@@ -47,7 +51,14 @@ public class OrderActivity extends AppCompatActivity {
     String beanNum2Value = "";
     String beanType2Name = "";
 
+    private int selectType = 1;
+
+
+
     Handler handler = new Handler();
+
+    private static final int rdType1ID = 1;//second radio button id
+    private static final int rdType2ID = 2;//third radio button id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +76,33 @@ public class OrderActivity extends AppCompatActivity {
         tvBeanType2Num = (TextView) findViewById(R.id.tvBeanType2Num);
 
         btOrder = (Button) findViewById(R.id.btOrder);
+        rdSelectType1 = (RadioButton) findViewById(R.id.rdSelectType1);
+        rdSelectType2 = (RadioButton) findViewById(R.id.rdSelectType2);
+
+        rdSelectType = (RadioGroup) findViewById(R.id.rdSelectType);
+
 
         btOrder.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
+                Log.i(tag, "selectType = "+selectType);
+            }
+        });
+
+        rdSelectType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.rdSelectType1:
+                        // do operations specific to this selection
+                        selectType = 1;
+                        break;
+                    case R.id.rdSelectType2:
+                        selectType = 2;
+                        break;
+                    default:
+                        selectType = -1;
+                        break;
+                }
             }
         });
 
@@ -140,6 +175,28 @@ public class OrderActivity extends AppCompatActivity {
             handler.postDelayed(this, 1000);
         }
     };
+
+    public void makeOrder(String username, String beanType, String beanNum){
+        String url = "http://35.240.143.70:5000/makeOrder/"+username+"/"+beanType+"/"+beanNum;
+        Log.i(tag, "/makeOrder url: "+url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(tag, response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        mRequestQueue.add(request);
+
+    }
 
 
 }
