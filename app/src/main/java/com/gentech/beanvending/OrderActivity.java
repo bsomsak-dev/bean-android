@@ -66,6 +66,7 @@ public class OrderActivity extends AppCompatActivity {
         btOrder.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 monitor();
+                updateUi();
             }
         });
     }
@@ -115,4 +116,18 @@ public class OrderActivity extends AppCompatActivity {
         );
         mRequestQueue.add(request);
     }
+
+    private void updateUi() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+//                tvBeanType1Name.setText(beanType1Name);
+//                tvBeanType2Name.setText(beanType2Name);
+                tvBeanType1Num.setText(beanNum1Value);
+                tvBeanType2Num.setText(beanNum2Value);
+            }
+        });
+    }
+
+
 }
