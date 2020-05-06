@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         btLogin = (Button) findViewById(R.id.btLogin);
         edUsername = (EditText) findViewById(R.id.edUsername);
-        String previousUsername = loadUsername(MainActivity.this, usernameKey);
+        String previousUsername = loadPreferences(usernameKey);
 
         if(!previousUsername.isEmpty()){
             edUsername.setText(previousUsername);
@@ -40,24 +41,23 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please Enter Username!!", Toast.LENGTH_SHORT).show();
                 }else{
                     usernameValue = username;
-                    saveUsername(MainActivity.this, usernameKey, usernameValue);
-                    Intent intent = new Intent(MainActivity.this, OrderActivity.class);
+                    savePreferences(usernameKey, usernameValue);
+                    Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
                     startActivity(intent);
                 }
             }
         });
     }
 
-    public static void saveUsername(Context context, String usernameKey, String usernameValue) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+    public void savePreferences(String key, String value) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(usernameKey, usernameValue);
+        editor.putString(key, value);
         editor.apply();
     }
 
-    public static String loadUsername(Context context, String usernameKey) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String previousUsername = sharedPreferences.getString(usernameKey, "");
-        return previousUsername;
+    public String loadPreferences(String key) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPreferences.getString(key, "") ;
     }
 }
