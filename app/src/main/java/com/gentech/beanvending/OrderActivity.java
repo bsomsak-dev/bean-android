@@ -135,7 +135,7 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
-        handler.post(runnableCode);
+
     }
 
 
@@ -228,4 +228,15 @@ public class OrderActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnableCode);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.post(runnableCode);
+    }
 }
