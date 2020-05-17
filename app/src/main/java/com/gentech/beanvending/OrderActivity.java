@@ -9,10 +9,12 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +40,7 @@ public class OrderActivity extends AppCompatActivity {
     private TextView tvUsername;
 
     private TextView tvBeanType1Num, tvBeanType2Num;
-    private EditText edBeanNum;
+//    private EditText edBeanNum;
 
     private RequestQueue mRequestQueue;
     private Button btOrder;
@@ -62,6 +64,8 @@ public class OrderActivity extends AppCompatActivity {
     private static final int rdType1ID = 1;//second radio button id
     private static final int rdType2ID = 2;//third radio button id
 
+    Spinner spBeanNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,33 +88,32 @@ public class OrderActivity extends AppCompatActivity {
 
         rdSelectType = (RadioGroup) findViewById(R.id.rdSelectType);
 
-        edBeanNum = (EditText) findViewById(R.id.edBeanNum);
-
+        spBeanNum = (Spinner) findViewById(R.id.spBeanNum);
+        String[] items = new String[]{"1", "5", "10", "15"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        spBeanNum.setAdapter(adapter);
 
         btOrder.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 Log.i(tag, "selectType = "+ selectBeanType);
-                String selectBeanNum = edBeanNum.getText().toString();
-
                 boolean orderValid = true;
-                if(selectBeanNum.isEmpty()){
-                    Toast.makeText(OrderActivity.this, "Please Enter Bean number!!", Toast.LENGTH_LONG).show();
-                }else{
-                    if(selectBeanType.equals("1")){
-                        if(Integer.parseInt(selectBeanNum) > Integer.parseInt(beanNum1Value)){
-                            Toast.makeText(OrderActivity.this, "Not enough beans for your choice!!", Toast.LENGTH_LONG).show();
-                            orderValid = false;
-                        }
-                    }else{
-                        if(Integer.parseInt(selectBeanNum) > Integer.parseInt(beanNum2Value)){
-                            Toast.makeText(OrderActivity.this, "Not enough beans for your choice!!", Toast.LENGTH_LONG).show();
-                            orderValid = false;
 
-                        }
+                Log.i(tag, "spBeanNum = "+ spBeanNum.getSelectedItem().toString());
+                String orderBeanNum = spBeanNum.getSelectedItem().toString();
+
+                if(selectBeanType.equals("1")){
+                    if(Integer.parseInt(orderBeanNum) > Integer.parseInt(beanNum1Value)){
+                        Toast.makeText(OrderActivity.this, "Not enough beans for your choice!!", Toast.LENGTH_LONG).show();
+                        orderValid = false;
+                    }
+                }else{
+                    if(Integer.parseInt(orderBeanNum) > Integer.parseInt(beanNum2Value)){
+                        Toast.makeText(OrderActivity.this, "Not enough beans for your choice!!", Toast.LENGTH_LONG).show();
+                        orderValid = false;
                     }
                 }
                 if(orderValid){
-                    makeOrder(username, selectBeanType, selectBeanNum);
+                    makeOrder(username, selectBeanType, orderBeanNum);
                     Toast.makeText(OrderActivity.this, "Order Has Been Send!",Toast.LENGTH_LONG).show();
                 }
 

@@ -44,28 +44,16 @@
         app:layout_constraintStart_toEndOf="@+id/tvBeanType1Num"
         app:layout_constraintTop_toTopOf="@+id/tvBeanType1Num" />
 
-    <EditText
-        android:id="@+id/edBeanNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="Enter number"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rdSelectType" />
-
     <Button
         android:id="@+id/btOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Order"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edBeanNum" />
+        app:layout_constraintTop_toBottomOf="@+id/spBeanNum" />
 
     <TextView
         android:id="@+id/textView5"
@@ -113,6 +101,28 @@
             app:layout_constraintTop_toBottomOf="@+id/tvBeanType1Num" />
 
     </RadioGroup>
+
+    <Spinner
+        android:id="@+id/spBeanNum"
+        android:layout_width="120dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="40dp"
+        android:spinnerMode="dropdown"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.354"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/rdSelectType" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Select Bean Num"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/rdSelectType"
+        app:layout_constraintTop_toBottomOf="@+id/rdSelectType" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
