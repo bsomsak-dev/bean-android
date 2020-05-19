@@ -66,6 +66,7 @@ public class OrderActivity extends AppCompatActivity {
 
     Spinner spBeanNum;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
