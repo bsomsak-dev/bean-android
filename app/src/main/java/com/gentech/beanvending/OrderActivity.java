@@ -82,7 +82,7 @@ public class OrderActivity extends AppCompatActivity {
         tvBeanType1Num = (TextView) findViewById(R.id.tvBeanType1Num);
         tvBeanType2Num = (TextView) findViewById(R.id.tvBeanType2Num);
 
-
+//
         btOrder = (Button) findViewById(R.id.btOrder);
         rdSelectType1 = (RadioButton) findViewById(R.id.rdSelectType1);
         rdSelectType2 = (RadioButton) findViewById(R.id.rdSelectType2);
